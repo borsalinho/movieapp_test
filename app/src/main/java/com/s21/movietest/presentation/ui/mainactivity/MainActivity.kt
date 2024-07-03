@@ -2,7 +2,9 @@ package com.s21.movietest.presentation.ui.mainactivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.s21.movietest.R
 import com.s21.movietest.app.MyApp
@@ -26,13 +28,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadAllMovies() {
-        try {
-            lifecycleScope.launch {
-                mainActivityViewModel.loadAllMovies()
-            }
-        } catch (e : Exception) {
-            Toast.makeText(this, "Ошибка загрузkи данных", Toast.LENGTH_LONG).show()
-        }
+        mainActivityViewModel.loadAllMovies()
+    }
 
+    private fun checkErrors(){
+        mainActivityViewModel.error.observe(this, Observer { error ->
+            error?.let {
+                Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+                mainActivityViewModel.onErrorShown()
+            }
+        })
     }
 }
