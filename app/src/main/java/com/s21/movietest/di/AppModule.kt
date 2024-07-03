@@ -1,6 +1,7 @@
 package com.s21.movietest.di
 
 import android.content.Context
+import com.s21.domain.usecases.LoadAllMoviesUseCase
 import com.s21.movietest.presentation.ui.mainactivity.MainActivityViewModel
 import dagger.Module
 import dagger.Provides
@@ -17,8 +18,12 @@ class AppModule(val context : Context) {
 
     @Singleton
     @Provides
-    fun provideMainActivityViewModel() : MainActivityViewModel{
-        return MainActivityViewModel()
+    fun provideMainActivityViewModel(
+        loadAllMoviesUseCase : LoadAllMoviesUseCase
+    ) : MainActivityViewModel{
+        return MainActivityViewModel(
+            loadAllMoviesUseCase = loadAllMoviesUseCase
+        )
     }
 
 }

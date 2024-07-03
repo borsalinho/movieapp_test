@@ -3,7 +3,7 @@ package com.s21.data.storage.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "translations")
+@Entity(tableName = "movies")
 data class MovieEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,

@@ -2,10 +2,12 @@ package com.s21.movietest.di
 
 import android.content.Context
 import androidx.room.Room
+import com.s21.data.implementation.MovieRepositoryImpl
 import com.s21.data.network.api.MoviesApi
 import com.s21.data.storage.dao.MovieDao
 import com.s21.data.storage.database.MyAppDatabase
 import com.s21.data.storage.model.MovieEntity
+import com.s21.domain.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -41,5 +43,17 @@ class DataModule {
     @Provides
     fun provideTranslationDao(myAppDatabase: MyAppDatabase): MovieDao {
         return myAppDatabase.movieDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieRepositoryImpl(
+        moviesApi: MoviesApi,
+        movieDao: MovieDao
+    ) : MovieRepository {
+        return MovieRepositoryImpl(
+            moviesApi = moviesApi,
+            movieDao = movieDao
+        )
     }
 }
