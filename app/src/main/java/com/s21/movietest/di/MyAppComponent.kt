@@ -1,6 +1,6 @@
 package com.s21.movietest.di
 
-import com.s21.movietest.MainActivity
+import com.s21.movietest.presentation.ui.mainactivity.MainActivity
 import dagger.Component
 import javax.inject.Singleton
 

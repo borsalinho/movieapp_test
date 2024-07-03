@@ -43,6 +43,18 @@ dependencies {
 
     implementation(project(":domain"))
 
+    // ----------это все для DI
+    implementation(project(":data"))
+    //Room
+    implementation("androidx.room:room-runtime:2.5.0")
+    implementation("androidx.room:room-ktx:2.5.0")
+    kapt("androidx.room:room-compiler:2.5.0")
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    //GSON
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    //------------------
+
 
     //Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
