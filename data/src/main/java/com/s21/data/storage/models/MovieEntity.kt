@@ -1,4 +1,4 @@
-package com.s21.data.storage.model
+package com.s21.data.storage.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

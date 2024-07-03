@@ -1,6 +1,6 @@
 package com.s21.data.mappers
 
-import com.s21.data.storage.model.MovieEntity
+import com.s21.data.storage.models.MovieEntity
 import com.s21.domain.model.Movie
 
 fun MovieEntity.toMovie() : Movie {

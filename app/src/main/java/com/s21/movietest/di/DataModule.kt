@@ -3,11 +3,13 @@ package com.s21.movietest.di
 import android.content.Context
 import androidx.room.Room
 import com.s21.data.implementation.MovieRepositoryImpl
-import com.s21.data.network.api.MoviesApi
+import com.s21.data.implementation.PeopleRepositoryImpl
+import com.s21.data.network.api.StarWarsApi
 import com.s21.data.storage.dao.MovieDao
+import com.s21.data.storage.dao.PeopleDao
 import com.s21.data.storage.database.MyAppDatabase
-import com.s21.data.storage.model.MovieEntity
 import com.s21.domain.repository.MovieRepository
+import com.s21.domain.repository.PeopleRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -21,12 +23,12 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit() : MoviesApi {
+    fun provideRetrofit() : StarWarsApi {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(MoviesApi::class.java)
+            .create(StarWarsApi::class.java)
     }
 
     @Singleton
@@ -35,25 +37,45 @@ class DataModule {
         return Room.databaseBuilder(
             сontext,
             MyAppDatabase::class.java,
-            "translator-db"
+            "starwars-db"
         ).build()
     }
 
     @Singleton
     @Provides
-    fun provideTranslationDao(myAppDatabase: MyAppDatabase): MovieDao {
+    fun provideMovieDao(myAppDatabase: MyAppDatabase): MovieDao {
         return myAppDatabase.movieDao()
     }
 
     @Singleton
     @Provides
+    fun providePeopleDao(myAppDatabase: MyAppDatabase): PeopleDao {
+        return myAppDatabase.peopleDao()
+    }
+
+    @Singleton
+    @Provides
     fun provideMovieRepositoryImpl(
-        moviesApi: MoviesApi,
+        starWarsApi: StarWarsApi,
         movieDao: MovieDao
     ) : MovieRepository {
         return MovieRepositoryImpl(
-            moviesApi = moviesApi,
+            starWarsApi = starWarsApi,
             movieDao = movieDao
         )
     }
+
+    @Singleton
+    @Provides
+    fun providePeopleRepositoryImpl(
+        starWarsApi: StarWarsApi,
+        peopleDao: PeopleDao
+    ) : PeopleRepository {
+        return PeopleRepositoryImpl(
+            starWarsApi = starWarsApi,
+            peopleDao = peopleDao
+        )
+    }
+
+
 }

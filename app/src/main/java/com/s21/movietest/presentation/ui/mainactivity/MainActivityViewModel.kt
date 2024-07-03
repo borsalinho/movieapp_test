@@ -1,13 +1,10 @@
 package com.s21.movietest.presentation.ui.mainactivity
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
-import com.s21.domain.usecases.LoadAllMoviesUseCase
+import com.s21.domain.usecases.GetAllMoviesUseCase
 import com.s21.movietest.presentation.mappers.toMovieViewModel
 import com.s21.movietest.presentation.models.MovieViewData
 import kotlinx.coroutines.launch
@@ -15,7 +12,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class MainActivityViewModel(
-    private val loadAllMoviesUseCase: LoadAllMoviesUseCase
+    private val getAllMoviesUseCase: GetAllMoviesUseCase
 ) : ViewModel() {
 
     private val _movies = MutableLiveData<List<MovieViewData>>()
@@ -28,7 +25,7 @@ class MainActivityViewModel(
     fun loadAllMovies()  {
         try {
             viewModelScope.launch {
-                _movies.value =  loadAllMoviesUseCase.execute().map { it.toMovieViewModel() }
+                _movies.value =  getAllMoviesUseCase.execute().map { it.toMovieViewModel() }
             }
         } catch (e: HttpException) {
             _error.value = "Ошибка сети: ${e.message()}"

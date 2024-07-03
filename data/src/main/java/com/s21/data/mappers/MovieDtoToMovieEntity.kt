@@ -1,7 +1,7 @@
 package com.s21.data.mappers
 
-import com.s21.data.network.model.MovieDto
-import com.s21.data.storage.model.MovieEntity
+import com.s21.data.network.models.MovieDto
+import com.s21.data.storage.models.MovieEntity
 
 fun MovieDto.toMovieEntity() : MovieEntity {
     return MovieEntity(

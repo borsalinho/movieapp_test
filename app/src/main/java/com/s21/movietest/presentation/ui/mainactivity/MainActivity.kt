@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         movieAdapter = MovieAdapter(emptyList(), object : MovieAdapter.OnItemClickListener {
             override fun onItemClick(movie: MovieViewData) {
                 //потом для передачи испольщуем
-                Toast.makeText(this@MainActivity, "Clicked: ${movie.title}", Toast.LENGTH_SHORT).show()
+                movie.characters
             }
         })
         binding.movieAdapter.apply {

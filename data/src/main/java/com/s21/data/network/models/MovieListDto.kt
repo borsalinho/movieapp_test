@@ -1,4 +1,4 @@
-package com.s21.data.network.model
+package com.s21.data.network.models
 
 data class MovieListDto(
     val count : Int,
