@@ -22,6 +22,8 @@ class PersonAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(person: PersonViewData) {
             binding.personName.text = person.name
+            binding.personBirthDay.text = person.birth_year
+            binding.personGender.text = person.gender
             binding.root.setOnClickListener { onItemClickListener.onItemClick(person) }
         }
     }

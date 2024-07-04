@@ -10,6 +10,7 @@ import com.s21.movietest.app.MyApp
 import com.s21.movietest.databinding.ActivityMainBinding
 import com.s21.movietest.presentation.adapters.MovieAdapter
 import com.s21.movietest.presentation.models.CharactersViewData
+import com.s21.movietest.presentation.models.MovieNameViewData
 import com.s21.movietest.presentation.models.MovieViewData
 import com.s21.movietest.presentation.ui.fragments.PersonsFragment
 import javax.inject.Inject
@@ -41,8 +42,10 @@ class MainActivity : AppCompatActivity() {
                 val myFragment = PersonsFragment()
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, myFragment)
+                    .addToBackStack(null)
                     .commit()
                 mainActivityViewModel.setPersonsList(CharactersViewData(movie.characters))
+                mainActivityViewModel.setMovieName(MovieNameViewData(movie.title))
             }
         })
         binding.movieAdapter.apply {

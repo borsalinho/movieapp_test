@@ -11,6 +11,7 @@ import com.s21.movietest.presentation.mappers.toCharacters
 import com.s21.movietest.presentation.mappers.toMovieViewModel
 import com.s21.movietest.presentation.mappers.toPersonViewData
 import com.s21.movietest.presentation.models.CharactersViewData
+import com.s21.movietest.presentation.models.MovieNameViewData
 import com.s21.movietest.presentation.models.MovieViewData
 import com.s21.movietest.presentation.models.PersonViewData
 import kotlinx.coroutines.launch
@@ -31,49 +32,56 @@ class MainActivityViewModel(
     private val _personsList = MutableLiveData<CharactersViewData>()
     val personsList : LiveData<CharactersViewData> = _personsList
 
+    private val _movieName = MutableLiveData<MovieNameViewData>()
+    val movieName : LiveData<MovieNameViewData> = _movieName
+
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
 
+
+
     fun getPersons(){
-        try {
-            viewModelScope.launch {
-                val chars : Characters? = personsList.value?.toCharacters()
-                if (chars == null){
-                    _error.value = "Не удалось получить список персонажей"
+        viewModelScope.launch {
+            try {
+                val chars: Characters? = personsList.value?.toCharacters()
+                if (chars == null) {
                     throw IllegalArgumentException("Не удалось получить список персонажей")
                 }
-                _persons.value =  getPersonByFilmUseCase
-                    .execute(chars).map { it.toPersonViewData() }
+                _persons.value = getPersonByFilmUseCase.execute(chars).map { it.toPersonViewData() }
+            } catch (e: Exception) {
+                handleError(e)
             }
-        } catch (e: HttpException) {
-            _error.value = "Ошибка сети: ${e.message()}"
-        } catch (e: IOException) {
-            _error.value = "Ошибка ввода-вывода: ${e.message}"
-        } catch (e: Exception) {
-            _error.value = "Не удалось загрузить данные: ${e.message}"
         }
     }
     fun setPersonsList(charactersViewData : CharactersViewData){
         _personsList.value = charactersViewData
     }
 
+    fun setMovieName(movieNameViewData : MovieNameViewData){
+        _movieName.value = movieNameViewData
+    }
+
     fun getAllMovies()  {
-        try {
-            viewModelScope.launch {
-                _movies.value =  getAllMoviesUseCase.execute().map { it.toMovieViewModel() }
+        viewModelScope.launch {
+            try {
+                _movies.value = getAllMoviesUseCase.execute().map { it.toMovieViewModel() }
+            } catch (e: Exception) {
+                handleError(e)
             }
-        } catch (e: HttpException) {
-            _error.value = "Ошибка сети: ${e.message()}"
-        } catch (e: IOException) {
-            _error.value = "Ошибка ввода-вывода: ${e.message}"
-        } catch (e: Exception) {
-            _error.value = "Не удалось загрузить данные: ${e.message}"
         }
     }
 
     fun onErrorShown() {
         _error.value = null
+    }
+
+    private fun handleError(e: Exception) {
+        when (e) {
+            is HttpException -> _error.value = "Ошибка сети: ${e.message()}"
+            is IOException -> _error.value = "Ошибка ввода-вывода: ${e.message}"
+            else -> _error.value = "Не удалось загрузить данные: ${e.message}"
+        }
     }
 
 }
