@@ -5,22 +5,22 @@ import com.s21.data.mappers.toPeople
 import com.s21.data.mappers.toPeopleEntity
 import com.s21.data.models.CharactersData
 import com.s21.data.network.api.StarWarsApi
-import com.s21.data.network.models.PeopleDto
-import com.s21.data.storage.dao.PeopleDao
-import com.s21.data.storage.models.PeopleEntity
+import com.s21.data.network.models.PersonDto
+import com.s21.data.storage.dao.PersonDao
+import com.s21.data.storage.models.PersonEntity
 import com.s21.domain.model.Characters
-import com.s21.domain.model.People
-import com.s21.domain.repository.PeopleRepository
+import com.s21.domain.model.Person
+import com.s21.domain.repository.PersonRepository
 
-class PeopleRepositoryImpl(
-    val peopleDao: PeopleDao,
+class PersonRepositoryImpl(
+    val personDao: PersonDao,
     val starWarsApi: StarWarsApi
-) : PeopleRepository {
+) : PersonRepository {
 
-    override suspend fun getPeopleByFilm(characters : Characters): List<People> {
+    override suspend fun getPersonByFilm(characters : Characters): List<Person> {
 
         val charactersData : CharactersData = characters.toCharactersData()
-        val peopleList = mutableListOf<PeopleEntity>()
+        val peopleList = mutableListOf<PersonEntity>()
 
         for (url in charactersData.characters){
             val peopleId = url.removePrefix("https://swapi.dev/api/people/")
@@ -34,7 +34,7 @@ class PeopleRepositoryImpl(
                 continue
             }
 
-            insertPerson(getPeopleFromApi(peopleId).toPeopleEntity())
+            insertPerson(getPersonFromApi(peopleId).toPeopleEntity())
             getPeopleFromDBById(peopleId)?.let {people ->
                 peopleList.add(people)
             }
@@ -45,16 +45,16 @@ class PeopleRepositoryImpl(
     }
 
 
-    private suspend fun getPeopleFromApi(peopleId : Int) : PeopleDto{
+    private suspend fun getPersonFromApi(peopleId : Int) : PersonDto{
         return starWarsApi.getPeopleById(peopleId = peopleId)
     }
 
-    private suspend fun insertPerson(people : PeopleEntity){
-        peopleDao.insertPeople(people = people)
+    private suspend fun insertPerson(people : PersonEntity){
+        personDao.insertPerson(people = people)
     }
 
-    private suspend fun getPeopleFromDBById(peopleId : Int) : PeopleEntity?{
-        return peopleDao.getPeopleById(peopleId = peopleId)
+    private suspend fun getPeopleFromDBById(peopleId : Int) : PersonEntity?{
+        return personDao.getPersonById(peopleId = peopleId)
     }
 }
 

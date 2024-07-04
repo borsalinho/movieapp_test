@@ -3,8 +3,8 @@ package com.s21.data.storage.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "people")
-data class PeopleEntity(
+@Entity(tableName = "persons")
+data class PersonEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val height: String,

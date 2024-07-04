@@ -1,9 +1,9 @@
 package com.s21.movietest.di
 
 import com.s21.domain.repository.MovieRepository
-import com.s21.domain.repository.PeopleRepository
+import com.s21.domain.repository.PersonRepository
 import com.s21.domain.usecases.GetAllMoviesUseCase
-import com.s21.domain.usecases.GetPeoplesByFilmUseCase
+import com.s21.domain.usecases.GetPersonByFilmUseCase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -19,8 +19,8 @@ class DomainModule {
 
     @Singleton
     @Provides
-    fun provideGetPeoplesByFilmUseCase(peopleRepository: PeopleRepository) : GetPeoplesByFilmUseCase {
-        return GetPeoplesByFilmUseCase(peopleRepository = peopleRepository)
+    fun provideGetPeoplesByFilmUseCase(personRepository: PersonRepository) : GetPersonByFilmUseCase {
+        return GetPersonByFilmUseCase(personRepository = personRepository)
     }
 
 

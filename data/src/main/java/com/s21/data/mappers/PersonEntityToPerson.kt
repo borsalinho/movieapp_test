@@ -1,10 +1,10 @@
 package com.s21.data.mappers
 
-import com.s21.data.storage.models.PeopleEntity
-import com.s21.domain.model.People
+import com.s21.data.storage.models.PersonEntity
+import com.s21.domain.model.Person
 
-fun PeopleEntity.toPeople() : People {
-    return People(
+fun PersonEntity.toPeople() : Person {
+    return Person(
         id = this.id,
         name = this.name,
         height = this.height,

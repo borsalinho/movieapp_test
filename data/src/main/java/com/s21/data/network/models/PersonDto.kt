@@ -1,6 +1,6 @@
-package com.s21.domain.model
+package com.s21.data.network.models
 
-data class People(
+data class PersonDto(
     val id : Int,
     val name: String,
     val height: String,

@@ -3,13 +3,13 @@ package com.s21.movietest.di
 import android.content.Context
 import androidx.room.Room
 import com.s21.data.implementation.MovieRepositoryImpl
-import com.s21.data.implementation.PeopleRepositoryImpl
+import com.s21.data.implementation.PersonRepositoryImpl
 import com.s21.data.network.api.StarWarsApi
 import com.s21.data.storage.dao.MovieDao
-import com.s21.data.storage.dao.PeopleDao
+import com.s21.data.storage.dao.PersonDao
 import com.s21.data.storage.database.MyAppDatabase
 import com.s21.domain.repository.MovieRepository
-import com.s21.domain.repository.PeopleRepository
+import com.s21.domain.repository.PersonRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -49,8 +49,8 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun providePeopleDao(myAppDatabase: MyAppDatabase): PeopleDao {
-        return myAppDatabase.peopleDao()
+    fun providePersonDao(myAppDatabase: MyAppDatabase): PersonDao {
+        return myAppDatabase.personDao()
     }
 
     @Singleton
@@ -67,13 +67,13 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun providePeopleRepositoryImpl(
+    fun providePersonRepositoryImpl(
         starWarsApi: StarWarsApi,
-        peopleDao: PeopleDao
-    ) : PeopleRepository {
-        return PeopleRepositoryImpl(
+        personDao: PersonDao
+    ) : PersonRepository {
+        return PersonRepositoryImpl(
             starWarsApi = starWarsApi,
-            peopleDao = peopleDao
+            personDao = personDao
         )
     }
 

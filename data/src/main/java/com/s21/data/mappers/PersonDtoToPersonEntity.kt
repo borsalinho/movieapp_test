@@ -1,10 +1,10 @@
 package com.s21.data.mappers
 
-import com.s21.data.network.models.PeopleDto
-import com.s21.data.storage.models.PeopleEntity
+import com.s21.data.network.models.PersonDto
+import com.s21.data.storage.models.PersonEntity
 
-fun PeopleDto.toPeopleEntity() : PeopleEntity{
-    return PeopleEntity(
+fun PersonDto.toPeopleEntity() : PersonEntity{
+    return PersonEntity(
         name = this.name,
         height = this.height,
         mass = this.mass,
