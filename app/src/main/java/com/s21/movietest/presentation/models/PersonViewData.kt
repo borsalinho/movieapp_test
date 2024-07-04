@@ -1,11 +1,7 @@
-package com.s21.data.storage.models
+package com.s21.movietest.presentation.models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "persons")
-data class PersonEntity(
-    @PrimaryKey var id: Int,
+data class PersonViewData (
+    val id : Int,
     val name: String,
     val height: String,
     val mass: String,
@@ -15,10 +11,10 @@ data class PersonEntity(
     val birth_year: String,
     val gender: String,
     val homeworld: String,
-    val films: String,
-    val species: String,
-    val vehicles: String,
-    val starships: String,
+    val films: List<String>,
+    val species: List<String>,
+    val vehicles: List<String>,
+    val starships: List<String>,
     val created: String,
     val edited: String,
     val url: String

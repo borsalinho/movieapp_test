@@ -34,7 +34,9 @@ class PersonRepositoryImpl(
                 continue
             }
 
-            insertPerson(getPersonFromApi(peopleId).toPeopleEntity())
+            var peopleEntity = getPersonFromApi(peopleId).toPeopleEntity()
+            peopleEntity.id = peopleId
+            insertPerson(peopleEntity)
             getPeopleFromDBById(peopleId)?.let {people ->
                 peopleList.add(people)
             }

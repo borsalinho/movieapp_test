@@ -23,5 +23,4 @@ class DomainModule {
         return GetPersonByFilmUseCase(personRepository = personRepository)
     }
 
-
 }

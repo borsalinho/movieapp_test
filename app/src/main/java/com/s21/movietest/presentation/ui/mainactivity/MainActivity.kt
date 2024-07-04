@@ -2,17 +2,16 @@ package com.s21.movietest.presentation.ui.mainactivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.s21.movietest.R
 import com.s21.movietest.app.MyApp
 import com.s21.movietest.databinding.ActivityMainBinding
 import com.s21.movietest.presentation.adapters.MovieAdapter
+import com.s21.movietest.presentation.models.CharactersViewData
 import com.s21.movietest.presentation.models.MovieViewData
-import kotlinx.coroutines.launch
+import com.s21.movietest.presentation.ui.fragments.PersonsFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -33,14 +32,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadAllMovies() {
-        mainActivityViewModel.loadAllMovies()
+        mainActivityViewModel.getAllMovies()
     }
 
     private fun setupRecyclerView() {
         movieAdapter = MovieAdapter(emptyList(), object : MovieAdapter.OnItemClickListener {
             override fun onItemClick(movie: MovieViewData) {
-                //потом для передачи испольщуем
-                movie.characters
+                val myFragment = PersonsFragment()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, myFragment)
+                    .commit()
+                mainActivityViewModel.setPersonsList(CharactersViewData(movie.characters))
             }
         })
         binding.movieAdapter.apply {
