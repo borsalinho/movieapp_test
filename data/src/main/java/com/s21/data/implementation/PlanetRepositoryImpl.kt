@@ -1,6 +1,6 @@
 package com.s21.data.implementation
 
-import com.s21.data.mappers.toMovie
+import android.util.Log
 import com.s21.data.mappers.toPlanet
 import com.s21.data.mappers.toPlanetEntity
 import com.s21.data.network.api.StarWarsApi
@@ -16,17 +16,21 @@ class PlanetRepositoryImpl(
     val starWarsApi: StarWarsApi
 ) : PlanetRepository {
     override suspend fun getPlanetByPerson(homeWorld: HomeWorld): Planet {
-        val planetId = homeWorld.url.removePrefix("https://swapi.dev/api/planet/")
+
+        val planetId = homeWorld.url.removePrefix("https://swapi.dev/api/planets/")
             .removeSuffix("/")
             .toInt()
+
         val planetEntityFromBD = getPlanetFromDBById(planetId)
 
+
         if (planetEntityFromBD != null){
-            planetEntityFromBD.id = planetId
             return planetEntityFromBD.toPlanet()
         }
-        var planetDtoFromApi = getPlanetFromApi(planetId)
-        insertPlanet(planetDtoFromApi.toPlanetEntity())
+        var planetEntity = getPlanetFromApi(planetId).toPlanetEntity()
+
+        planetEntity.id = planetId
+        insertPlanet(planetEntity)
         return  getPlanetFromDBById(planetId)?.toPlanet() ?: throw RuntimeException("Не удалось выгрузить из БД")
     }
 

@@ -1,9 +1,7 @@
 package com.s21.data.implementation
 
-import com.s21.data.mappers.toCharactersData
 import com.s21.data.mappers.toPeople
 import com.s21.data.mappers.toPeopleEntity
-import com.s21.data.models.CharactersData
 import com.s21.data.network.api.StarWarsApi
 import com.s21.data.network.models.PersonDto
 import com.s21.data.storage.dao.PersonDao
@@ -19,10 +17,9 @@ class PersonRepositoryImpl(
 
     override suspend fun getPersonByFilm(characters : Characters): List<Person> {
 
-        val charactersData : CharactersData = characters.toCharactersData()
         val peopleList = mutableListOf<PersonEntity>()
 
-        for (url in charactersData.characters){
+        for (url in characters.characters){
             val peopleId = url.removePrefix("https://swapi.dev/api/people/")
                         .removeSuffix("/")
                         .toInt()

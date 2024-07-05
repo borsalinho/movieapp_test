@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -16,6 +15,8 @@ import com.s21.movietest.app.MyApp
 import com.s21.movietest.databinding.FragmentPersonBinding
 import com.s21.movietest.presentation.adapters.PersonAdapter
 import com.s21.movietest.presentation.models.PersonViewData
+import com.s21.movietest.presentation.models.HomeWorldViewData
+import com.s21.movietest.presentation.models.PersonNameViewData
 import com.s21.movietest.presentation.ui.mainactivity.MainActivityViewModel
 import javax.inject.Inject
 
@@ -52,7 +53,13 @@ class PersonsFragment : Fragment() {
     private fun setupRecyclerView() {
         personsAdapter = PersonAdapter(emptyList(), object : PersonAdapter.OnItemClickListener {
             override fun onItemClick(person: PersonViewData) {
-
+                var myFragment = PlanetFragment()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, myFragment)
+                    .addToBackStack(null)
+                    .commit()
+                mainActivityViewModel.setHomeWorld(HomeWorldViewData(person.homeworld))
+                mainActivityViewModel.setPersonName(PersonNameViewData(person.name))
             }
         })
         binding.personsAdapter.apply {
