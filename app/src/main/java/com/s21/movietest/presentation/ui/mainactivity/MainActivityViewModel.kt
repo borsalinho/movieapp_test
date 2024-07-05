@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.s21.domain.model.Characters
 import com.s21.domain.usecases.GetAllMoviesUseCase
 import com.s21.domain.usecases.GetPersonByFilmUseCase
+import com.s21.domain.usecases.GetPlanetByFilmUseCase
 import com.s21.movietest.presentation.mappers.toCharacters
 import com.s21.movietest.presentation.mappers.toMovieViewModel
 import com.s21.movietest.presentation.mappers.toPersonViewData
@@ -20,7 +21,8 @@ import java.io.IOException
 
 class MainActivityViewModel(
     private val getAllMoviesUseCase: GetAllMoviesUseCase,
-    private val getPersonByFilmUseCase: GetPersonByFilmUseCase
+    private val getPersonByFilmUseCase: GetPersonByFilmUseCase,
+    private val getPlanetByFilmUseCase : GetPlanetByFilmUseCase
 ) : ViewModel() {
 
     private val _movies = MutableLiveData<List<MovieViewData>>()

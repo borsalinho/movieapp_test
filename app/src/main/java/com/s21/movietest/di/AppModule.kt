@@ -3,6 +3,7 @@ package com.s21.movietest.di
 import android.content.Context
 import com.s21.domain.usecases.GetAllMoviesUseCase
 import com.s21.domain.usecases.GetPersonByFilmUseCase
+import com.s21.domain.usecases.GetPlanetByFilmUseCase
 import com.s21.movietest.presentation.ui.mainactivity.MainActivityViewModel
 import dagger.Module
 import dagger.Provides
@@ -21,11 +22,13 @@ class AppModule(val context : Context) {
     @Provides
     fun provideMainActivityViewModel(
         getAllMoviesUseCase : GetAllMoviesUseCase,
-        getPersonByFilmUseCase: GetPersonByFilmUseCase
+        getPersonByFilmUseCase: GetPersonByFilmUseCase,
+        getPlanetByFilmUseCase : GetPlanetByFilmUseCase
     ) : MainActivityViewModel{
         return MainActivityViewModel(
             getAllMoviesUseCase = getAllMoviesUseCase,
-            getPersonByFilmUseCase = getPersonByFilmUseCase
+            getPersonByFilmUseCase = getPersonByFilmUseCase,
+            getPlanetByFilmUseCase = getPlanetByFilmUseCase
         )
     }
 

@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Room
 import com.s21.data.implementation.MovieRepositoryImpl
 import com.s21.data.implementation.PersonRepositoryImpl
+import com.s21.data.implementation.PlanetRepositoryImpl
 import com.s21.data.network.api.StarWarsApi
 import com.s21.data.storage.dao.MovieDao
 import com.s21.data.storage.dao.PersonDao
+import com.s21.data.storage.dao.PlanetDao
 import com.s21.data.storage.database.MyAppDatabase
 import com.s21.domain.repository.MovieRepository
 import com.s21.domain.repository.PersonRepository
+import com.s21.domain.repository.PlanetRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -55,6 +58,12 @@ class DataModule {
 
     @Singleton
     @Provides
+    fun providePlanetDao(myAppDatabase: MyAppDatabase): PlanetDao {
+        return myAppDatabase.planetDao()
+    }
+
+    @Singleton
+    @Provides
     fun provideMovieRepositoryImpl(
         starWarsApi: StarWarsApi,
         movieDao: MovieDao
@@ -74,6 +83,18 @@ class DataModule {
         return PersonRepositoryImpl(
             starWarsApi = starWarsApi,
             personDao = personDao
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun providePlanetRepositoryImpl(
+        starWarsApi: StarWarsApi,
+        planetDao: PlanetDao
+    ) : PlanetRepository {
+        return PlanetRepositoryImpl(
+            starWarsApi = starWarsApi,
+            planetDao = planetDao
         )
     }
 
