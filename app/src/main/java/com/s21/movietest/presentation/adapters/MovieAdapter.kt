@@ -1,5 +1,6 @@
 package com.s21.movietest.presentation.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -19,11 +20,12 @@ class MovieAdapter(
         val binding: ItemMovieBinding,
         private val onItemClickListener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(movie: MovieViewData) {
             binding.filmName.text = movie.title
-            binding.directorName.text = movie.director
-            binding.producerName.text = movie.producer
-            binding.date.text = movie.release_date
+            binding.directorName.text = "director: " + movie.director
+            binding.producerName.text = "producer: " + movie.producer
+            binding.date.text = "release date: " + movie.release_date
             binding.root.setOnClickListener { onItemClickListener.onItemClick(movie) }
         }
     }
@@ -46,7 +48,7 @@ class MovieAdapter(
     }
 
     fun updateMovies(newMovies: List<MovieViewData>) {
-        movies = newMovies
+        movies = newMovies.sortedBy { it.episode_id }
         notifyDataSetChanged()
     }
 }

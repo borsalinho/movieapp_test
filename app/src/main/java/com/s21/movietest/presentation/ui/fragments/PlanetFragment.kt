@@ -1,5 +1,6 @@
 package com.s21.movietest.presentation.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -41,17 +42,21 @@ class PlanetFragment : Fragment() {
 
     private fun getPlanet(){
         mainActivityViewModel.getPlanet()
+        binding.progressBar3.visibility = View.VISIBLE
     }
 
+    @SuppressLint("SetTextI18n")
     private fun observeViewModel() {
         mainActivityViewModel.planet.observe(viewLifecycleOwner, Observer { planet ->
 
-            binding.planetName.text = planet.name
-            binding.planetDiameter.text = planet.diameter
-            binding.planetGrav.text = planet.gravity
-            binding.planetKlimat.text = planet.climate
-            binding.planetMestnost.text = planet.terrain
-            binding.planetPopulation.text = planet.population
+            binding.planetName.text = "planet: " + planet.name
+            binding.planetDiameter.text = "diameter: " + planet.diameter
+            binding.planetGrav.text = "gravity: " + planet.gravity
+            binding.planetKlimat.text = "climate: " + planet.climate
+            binding.planetMestnost.text = "terrain: " + planet.terrain
+            binding.planetPopulation.text = "population: " + planet.population
+
+            binding.progressBar3.visibility = View.GONE
         })
 
         mainActivityViewModel.personName.observe(viewLifecycleOwner, Observer { planetNmae ->

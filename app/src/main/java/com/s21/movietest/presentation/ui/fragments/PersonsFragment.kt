@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -47,6 +48,7 @@ class PersonsFragment : Fragment() {
 
     private fun getPersons(){
         mainActivityViewModel.getPersons()
+        binding.progressBar2.visibility = View.VISIBLE
     }
 
 
@@ -71,6 +73,14 @@ class PersonsFragment : Fragment() {
     private fun observeViewModel() {
         mainActivityViewModel.persons.observe(viewLifecycleOwner, Observer { persons ->
             personsAdapter.updatePersons(persons)
+            binding.progressBar2.visibility = View.GONE
+        })
+        mainActivityViewModel.error.observe(viewLifecycleOwner, Observer { error ->
+            error?.let {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
+                mainActivityViewModel.onErrorShown()
+                binding.progressBar2.visibility = View.GONE
+            }
         })
     }
 

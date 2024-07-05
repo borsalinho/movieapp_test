@@ -2,6 +2,7 @@ package com.s21.movietest.presentation.ui.mainactivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadAllMovies() {
         mainActivityViewModel.getAllMovies()
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView() {
@@ -57,12 +59,14 @@ class MainActivity : AppCompatActivity() {
     private fun observeViewModel() {
         mainActivityViewModel.movies.observe(this, Observer { movies ->
             movieAdapter.updateMovies(movies)
+            binding.progressBar.visibility = View.GONE
         })
 
         mainActivityViewModel.error.observe(this, Observer { error ->
             error?.let {
                 Toast.makeText(this, error, Toast.LENGTH_LONG).show()
                 mainActivityViewModel.onErrorShown()
+                binding.progressBar.visibility = View.GONE
             }
         })
     }

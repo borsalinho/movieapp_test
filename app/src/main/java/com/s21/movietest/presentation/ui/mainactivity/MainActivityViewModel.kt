@@ -1,5 +1,6 @@
 package com.s21.movietest.presentation.ui.mainactivity
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -66,6 +67,7 @@ class MainActivityViewModel(
                 }
                 _persons.value = getPersonByFilmUseCase
                     .execute(chars.toCharacters()).map { it.toPersonViewData() }
+
             } catch (e: Exception) {
                 handleError(e)
             }

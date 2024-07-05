@@ -19,6 +19,7 @@
             android:background="?attr/colorPrimary"
             android:textStyle="bold"
             app:titleTextColor="@color/white"
+            app:navigationIcon="@drawable/back_arrow"
             android:theme="?attr/actionBarTheme"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -28,5 +29,13 @@
             tools:listitem="@layout/item_person" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+
 
 </FrameLayout>

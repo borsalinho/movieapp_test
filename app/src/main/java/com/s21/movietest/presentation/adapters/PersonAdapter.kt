@@ -1,5 +1,6 @@
 package com.s21.movietest.presentation.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -20,10 +21,11 @@ class PersonAdapter(
         val binding: ItemPersonBinding,
         private val onItemClickListener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(person: PersonViewData) {
             binding.personName.text = person.name
-            binding.personBirthDay.text = person.birth_year
-            binding.personGender.text = person.gender
+            binding.personBirthDay.text = "birth year: " + person.birth_year
+            binding.personGender.text = "gender: " + person.gender
             binding.root.setOnClickListener { onItemClickListener.onItemClick(person) }
         }
     }
